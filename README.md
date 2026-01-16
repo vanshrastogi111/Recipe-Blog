@@ -1,4 +1,4 @@
-
+![Recipe Blog](./Recipe-Blog.png)
 ---
 
 # Recipe Blog
