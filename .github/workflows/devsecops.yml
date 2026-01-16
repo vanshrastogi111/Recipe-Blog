@@ -1,0 +1,39 @@
+name: DevSecOps Pipeline
+
+# Trigger the pipeline whenever you push to the 'main' branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-secure:
+    name: Build & Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Get your code from the repo
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Build the Docker Image
+      - name: Build Docker Image
+        run: docker build -t recipe-blog:${{ github.sha }} .
+
+      # Step 3: Run Trivy Vulnerability Scanner
+      # This fails the build if it finds 'CRITICAL' issues
+      - name: Run Trivy Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'recipe-blog:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1' # Fail the pipeline if issues are found
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      # Step 4: Login to Docker Hub (We will add this later)
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v2
+      #   ...
