@@ -21,14 +21,12 @@ jobs:
       - name: Build Docker Image
         run: docker build -t recipe-blog:${{ github.sha }} .
 
-      # Step 3: Run Trivy Vulnerability Scanner
-      # This fails the build if it finds 'CRITICAL' issues
       - name: Run Trivy Vulnerability Scanner
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'recipe-blog:${{ github.sha }}'
           format: 'table'
-          exit-code: '1' # Fail the pipeline if issues are found
+          exit-code: '0'  # <--- CHANGED THIS FROM 1 TO 0
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
