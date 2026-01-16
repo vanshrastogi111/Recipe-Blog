@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: recipe-blog-service
+spec:
+  selector:
+    app: recipe-blog
+  ports:
+    - protocol: TCP
+      port: 80       # Port you visit in browser
+      targetPort: 3000 # Port the app runs on
+  type: NodePort

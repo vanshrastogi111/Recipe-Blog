@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recipe-blog-deployment
+spec:
+  replicas: 1 # Start with 1 copy (pod)
+  selector:
+    matchLabels:
+      app: recipe-blog
+  template:
+    metadata:
+      labels:
+        app: recipe-blog
+    spec:
+      containers:
+      - name: recipe-blog-container
+        image: recipeblog-mongodb-nodejs-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        env:
+        # This tells the app to look for a service named 'mongo-service'
+        - name: MONGODB_URI
+          value: "mongodb://mongo-service:27017/RecipeBlog"
