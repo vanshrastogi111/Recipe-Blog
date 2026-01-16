@@ -1,0 +1,32 @@
+# Dependency directories (Crucial: Let Docker install these fresh)
+node_modules/
+
+# Version control
+.git/
+.gitignore
+
+# Docker & Kubernetes orchestration files
+Dockerfile
+docker-compose.yml
+.dockerignore
+k8s/
+
+# GitHub Actions workflows
+.github/
+
+# Documentation and Licenses
+README.md
+LICENSE
+
+# Local Data dumps (Don't bake data into the code image)
+MongoDB Data/
+
+# Logs and Debugging
+npm-debug.log
+*.log
+
+# IDE settings (Optional, but good practice)
+.vscode/
+
+Recipe-Blog.png
+.idea/
